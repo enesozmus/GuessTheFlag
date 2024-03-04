@@ -72,6 +72,7 @@ struct ContentView: View {
                             //Image(_countries[number])
                             //  .clipShape(.capsule)
                             //  .shadow(radius: 5)
+                            // ✅ Project 3 Challenge
                             FlagImage(of: _countries[number])
                         }
                     }
@@ -151,7 +152,7 @@ struct ContentView: View {
     }
 }
 
-// Struct
+// ✅ Project 3 Challenge →→ FlagImage() View
 struct FlagImage: View {
     let country: String
     
