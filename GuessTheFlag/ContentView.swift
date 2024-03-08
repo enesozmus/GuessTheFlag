@@ -15,7 +15,7 @@ struct ContentView: View {
     @State private var _isShowingScore = false
     @State private var _scoreTitle = ""
     
-    // challange
+    // ✅ challange (project 3)
     @State private var _score = 0
     let _questionAmount = 8
     
@@ -23,7 +23,12 @@ struct ContentView: View {
     @State private var _selectedAnswer = 0
     
     @State private var _isShowingGameOver = false
-
+    
+    // ✅ challange (project 6)
+    @State private var _isAnimatingOpacity = false
+    @State private var _rotationAmount = 0.0
+    @State private var _scaleAmount: CGFloat = 1.0
+    
     
     var body: some View {
         
@@ -72,8 +77,20 @@ struct ContentView: View {
                             //Image(_countries[number])
                             //  .clipShape(.capsule)
                             //  .shadow(radius: 5)
-                            // ✅ Project 3 Challenge
+                            // ✅ challange (project 3)
                             FlagImage(of: _countries[number])
+                            // ✅ challange (project 6)
+                                .opacity(
+                                    _isAnimatingOpacity ? (number == _correctAnswer ? 1 : 0.25) : 1
+                                )
+                                .rotation3DEffect(
+                                    .degrees(number == _selectedAnswer ? _rotationAmount : 0),
+                                    axis: (x: 0, y: 1, z: 0)
+                                )
+                                .scaleEffect(
+                                    number == _correctAnswer ? 1 : _scaleAmount,
+                                    anchor: .center
+                                )
                         }
                     }
                 }
@@ -130,6 +147,15 @@ struct ContentView: View {
         _score = number == _correctAnswer ? _score + 1 : _score
         _selectedAnswer = number
         
+        // ✅ challange (project 6)
+        withAnimation(.easeInOut){
+            _isAnimatingOpacity = true
+        }
+        withAnimation {
+            _rotationAmount = 360
+            _scaleAmount = 0.5
+        }
+        
         _isShowingScore = true
     }
     
@@ -141,6 +167,11 @@ struct ContentView: View {
             _countries.shuffle()
             _correctAnswer = Int.random(in: 0...2)
         }
+        
+        // ✅ challange (project 6)
+        _isAnimatingOpacity = false
+        _rotationAmount = 0.0
+        _scaleAmount = 1.0
     }
     
     func resetGame() {
@@ -152,7 +183,7 @@ struct ContentView: View {
     }
 }
 
-// ✅ Project 3 Challenge →→ FlagImage() View
+// ✅ challange (project 3) →→ FlagImage() View
 struct FlagImage: View {
     let country: String
     
